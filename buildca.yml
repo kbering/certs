@@ -1,0 +1,22 @@
+- hosts: localhost
+  connection: local
+  gather_facts: yes
+  become: yes
+
+  vars:
+    # custom CA, leaving undefined will create self-signed cert
+    cert_domain_ca: beringCA.bering
+    # cert CN
+    cert_domain_cn: kafka01.bering
+    # cert SAN names (subject alternative names)
+    cert_domains_san: ['*.bering','last.foo']
+    servers:
+      - kafka01.bering
+      - kafka02.bering
+      - kafka03.bering
+
+    # overwrite existing certs?
+    #cert_overwrite: yes
+
+  roles:
+    - role: ansible-role-cert-with-ca
